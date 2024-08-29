@@ -27,7 +27,7 @@ This project was my first foray into interpreters, emulators, and virtual machin
 
 ## Installation
 
-Use the `CMakeLists.txt` provided and compile with `make`.
+Use the provided `CMakeLists.txt` and compile with `make`.
 
 ```bash
   cmake CMakeLists.txt
