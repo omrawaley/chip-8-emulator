@@ -46,6 +46,12 @@ P - Pause ROM.
 M - Open settings menu.
 
 N - Open debug panes.
+
+## Todo
+- Migrate from C-style arrays to `std::array`
+- Allow the user to modify IPS rather than frame time
+- Add more CLI arguments
+
 ## License
 
 Chip-8 emulator - [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)
