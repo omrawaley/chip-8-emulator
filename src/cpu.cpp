@@ -27,6 +27,7 @@ void CPU::reset()
     this->i = 0;
     this->pc = CPU::pcStart;
     this->delayTimer = 0;
+    this->soundTimer = 0;
 
     for(auto& reg : this->v)
         reg = 0;

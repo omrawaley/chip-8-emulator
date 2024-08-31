@@ -29,7 +29,7 @@ void Instructions::RET(CPU& cpu)
 {
     --cpu.sp;
 
-    cpu.pc = cpu.stack[cpu.sp];
+    cpu.pc = cpu.stack.at(cpu.sp);
 }
 
 void Instructions::JMP_NNN(CPU& cpu, uint16_t nnn)
@@ -39,7 +39,7 @@ void Instructions::JMP_NNN(CPU& cpu, uint16_t nnn)
 
 void Instructions::CALL(CPU& cpu, uint16_t nnn)
 {
-    cpu.stack[cpu.sp] = cpu.pc;
+    cpu.stack.at(cpu.sp) = cpu.pc;
 
     ++cpu.sp;
 
@@ -48,100 +48,100 @@ void Instructions::CALL(CPU& cpu, uint16_t nnn)
 
 void Instructions::SE_VX_NN(CPU& cpu, uint8_t x, uint8_t nn)
 {
-    if(cpu.v[x] == nn)
+    if(cpu.v.at(x) == nn)
         cpu.pc += 2;
 }
 
 void Instructions::SNE_VX_NN(CPU& cpu, uint8_t x, uint8_t nn)
 {
-    if(cpu.v[x] != nn)
+    if(cpu.v.at(x) != nn)
         cpu.pc += 2;
 }
 
 void Instructions::SE_VX_VY(CPU& cpu, uint8_t x, uint8_t y)
 {
-    if(cpu.v[x] == cpu.v[y])
+    if(cpu.v.at(x) == cpu.v.at(y))
         cpu.pc += 2;
 }
 
 void Instructions::LD_VX_NN(CPU& cpu, uint8_t x, uint8_t nn)
 {
-    cpu.v[x] = nn;
+    cpu.v.at(x) = nn;
 }
 
 void Instructions::ADD_VX_NN(CPU& cpu, uint8_t x, uint8_t nn)
 {
-    cpu.v[x] += nn;
+    cpu.v.at(x) += nn;
 }
 
 void Instructions::LD_VX_VY(CPU& cpu, uint8_t x, uint8_t y)
 {
-    cpu.v[x] = cpu.v[y];
+    cpu.v.at(x) = cpu.v.at(y);
 }
 
 void Instructions::OR(CPU& cpu, uint8_t x, uint8_t y)
 {
-    cpu.v[x] |= cpu.v[y];
+    cpu.v.at(x) |= cpu.v.at(y);
 }
 
 void Instructions::AND(CPU& cpu, uint8_t x, uint8_t y)
 {
-    cpu.v[x] &= cpu.v[y];
+    cpu.v.at(x) &= cpu.v.at(y);
 }
 
 void Instructions::XOR(CPU& cpu, uint8_t x, uint8_t y)
 {
-    cpu.v[x] ^= cpu.v[y];
+    cpu.v.at(x) ^= cpu.v.at(y);
 }
 
 void Instructions::ADD_VX_VY(CPU& cpu, uint8_t x, uint8_t y)
 {
-    const bool carry {(cpu.v[x] + cpu.v[y]) > 255};
+    const bool carry {(cpu.v.at(x) + cpu.v.at(y)) > 255};
 
-    cpu.v[x] += cpu.v[y] & 0xFF;
+    cpu.v.at(x) += cpu.v.at(y) & 0xFF;
 
-    cpu.v[0xF] = carry;
+    cpu.v.at(0xF) = carry;
 }
 
 void Instructions::SUB_VX_VY(CPU& cpu, uint8_t x, uint8_t y)
 {
-    const bool notBorrow {cpu.v[x] >= cpu.v[y]};
+    const bool notBorrow {cpu.v.at(x) >= cpu.v.at(y)};
 
-    cpu.v[x] -= cpu.v[y];
+    cpu.v.at(x) -= cpu.v.at(y);
 
-    cpu.v[0xF] = notBorrow;
+    cpu.v.at(0xF) = notBorrow;
 }
 
 void Instructions::SHR(CPU& cpu, uint8_t x)
 {
-    uint8_t lsb = cpu.v[x] & 0x1;
+    uint8_t lsb = cpu.v.at(x) & 0x1;
 
-    cpu.v[x] >>= 1;
+    cpu.v.at(x) >>= 1;
 
-    cpu.v[0xF] = lsb;
+    cpu.v.at(0xF) = lsb;
 }
 
 void Instructions::SUBN_VX_VY(CPU& cpu, uint8_t x, uint8_t y)
 {
-    const bool notBorrow {cpu.v[y] >= cpu.v[x]};
+    const bool notBorrow {cpu.v.at(y) >= cpu.v.at(x)};
 
-    cpu.v[x] = cpu.v[y] - cpu.v[x];
+    cpu.v.at(x) = cpu.v.at(y) - cpu.v.at(x);
 
-    cpu.v[0xF] = notBorrow;
+    cpu.v.at(0xF) = notBorrow;
 }
 
 void Instructions::SHL(CPU& cpu, uint8_t x)
 {
-    uint8_t msb = (cpu.v[x] & 0x80) >> 7;
+    uint8_t msb = (cpu.v.at(x) & 0x80) >> 7;
 
-    cpu.v[x] <<= 1;
+    cpu.v.at(x) <<= 1;
 
-    cpu.v[0xF] = msb;
+    cpu.v.at(0xF) = msb;
 }
 
 void Instructions::SNE_VX_VY(CPU& cpu, uint8_t x, uint8_t y)
 {
-    if(cpu.v[x] != cpu.v[y])
+    if(cpu.v.at(x) != cpu.v.at(y))
         cpu.pc += 2;
 }
 
@@ -152,20 +152,20 @@ void Instructions::LD_NNN(CPU& cpu, uint16_t nnn)
 
 void Instructions::JMP_V0(CPU& cpu, uint16_t nnn)
 {
-    cpu.pc = nnn + cpu.v[0];
+    cpu.pc = nnn + cpu.v.at(0);
 }
 
 void Instructions::RND(CPU& cpu, uint8_t x, uint8_t nn)
 {
-    cpu.v[x] = rand() & nn;
+    cpu.v.at(x) = rand() & nn;
 }
 
 void Instructions::DRW(Display& display, Memory& memory, CPU& cpu, uint8_t x, uint8_t y, uint8_t n)
 {
-    uint8_t xPos = cpu.v[x] % Display::displayWidth;
-    uint8_t yPos = cpu.v[y] % Display::displayHeight;
+    uint8_t xPos = cpu.v.at(x) % Display::displayWidth;
+    uint8_t yPos = cpu.v.at(y) % Display::displayHeight;
 
-    cpu.v[0xF] = 0;
+    cpu.v.at(0xF) = 0;
 
     for(uint8_t row = 0; row < n; ++row)
     {
@@ -186,7 +186,7 @@ void Instructions::DRW(Display& display, Memory& memory, CPU& cpu, uint8_t x, ui
 
             if(screenPixel == display.onColor)
             {
-                cpu.v[0xF] = 1;
+                cpu.v.at(0xF) = 1;
             }
 
             screenPixel = screenPixel == display.offColor ? display.onColor : display.offColor;
@@ -196,19 +196,19 @@ void Instructions::DRW(Display& display, Memory& memory, CPU& cpu, uint8_t x, ui
 
 void Instructions::SKP(Keypad& keypad, CPU& cpu, uint8_t x)
 {
-    if(keypad[(cpu.v[x] & 0xF)])
+    if(keypad[(cpu.v.at(x) & 0xF)])
         cpu.pc += 2;
 }
 
 void Instructions::SKNP(Keypad& keypad, CPU& cpu, uint8_t x)
 {
-    if(!keypad[(cpu.v[x] & 0xF)])
+    if(!keypad[(cpu.v.at(x) & 0xF)])
         cpu.pc += 2;
 }
 
 void Instructions::LD_VX_DT(CPU& cpu, uint8_t x)
 {
-    cpu.v[x] = cpu.delayTimer;
+    cpu.v.at(x) = cpu.delayTimer;
 }
 
 void Instructions::LD_VX_K(Keypad& keypad, CPU& cpu, uint8_t x)
@@ -217,9 +217,9 @@ void Instructions::LD_VX_K(Keypad& keypad, CPU& cpu, uint8_t x)
 
     for(uint8_t i = 0; i < Keypad::keyCount; ++i)
     {
-        if(keypad.oldKeys[i] && !keypad[i])
+        if(keypad.oldKeys.at(i) && !keypad[i])
         {
-            cpu.v[x] = i;
+            cpu.v.at(x) = i;
 
             released = true;
         }
@@ -231,41 +231,41 @@ void Instructions::LD_VX_K(Keypad& keypad, CPU& cpu, uint8_t x)
 
 void Instructions::LD_DT_VX(CPU& cpu, uint8_t x)
 {
-    cpu.delayTimer = cpu.v[x];
+    cpu.delayTimer = cpu.v.at(x);
 }
 
 void Instructions::LD_ST_VX(CPU& cpu, uint8_t x)
 {
-    cpu.soundTimer = cpu.v[x];
+    cpu.soundTimer = cpu.v.at(x);
 }
 
 void Instructions::ADD_I_VX(CPU& cpu, uint8_t x)
 {
-    cpu.i += cpu.v[x];
+    cpu.i += cpu.v.at(x);
 }
 
 void Instructions::LD_F_VX(CPU& cpu, uint8_t x)
 {
-    cpu.i = (cpu.v[x] & 0xF) * 5;
+    cpu.i = (cpu.v.at(x) & 0xF) * 5;
 }
 
 void Instructions::LD_B_VX(Memory& memory, CPU& cpu, uint8_t x)
 {
-    memory[cpu.i + 2] = cpu.v[x] % 10;
+    memory[cpu.i + 2] = cpu.v.at(x) % 10;
 
-    memory[cpu.i + 1] = (cpu.v[x] / 10) % 10;
+    memory[cpu.i + 1] = (cpu.v.at(x) / 10) % 10;
 
-    memory[cpu.i] = cpu.v[x] / 100;
+    memory[cpu.i] = cpu.v.at(x) / 100;
 }
 
 void Instructions::LD_MI_VX(Memory& memory, CPU& cpu, uint8_t x)
 {
     for(uint8_t i = 0; i <= x; ++i)
-        memory[(cpu.i + i) & 0xFFF] = cpu.v[i];
+        memory[(cpu.i + i) & 0xFFF] = cpu.v.at(i);
 }
 
 void Instructions::LD_VX_MI(Memory& memory, CPU& cpu, uint8_t x)
 {
     for(uint8_t i = 0; i <= x; ++i)
-        cpu.v[i] = memory[(cpu.i + i) & 0xFFF];
+        cpu.v.at(i) = memory[(cpu.i + i) & 0xFFF];
 }

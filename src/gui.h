@@ -38,7 +38,7 @@ namespace GUI
     const ImVec2 disassemblySize = {418, Display::displayHeight * Display::displayScale};
     const ImVec2 cpuContentsSize = {Display::displayWidth * Display::displayScaleMinimized, (Display::displayHeight * Display::displayScale) - (Display::displayHeight * Display::displayScaleMinimized)};
 
-    const std::string controlsText[8] = 
+    const std::array<std::string, 8> controlsText = 
     {
         "1  2  3  4    ",
         "1  2  3  C",
@@ -56,7 +56,7 @@ namespace GUI
 
     void processEvent(SDL_Event event);
 
-    void drawSettings(Chip8& chip8, float& frameTime, bool& takeScreenshot);
+    void drawSettings(Chip8& chip8, uint8_t& instructionsPerSecond, bool& takeScreenshot);
 
     void drawCPU(Chip8& chip8);
 
@@ -66,11 +66,11 @@ namespace GUI
 
     void drawROMs(Chip8& chip8);
 
-    void drawSpeed(float& frameTime);
+    void drawSpeed(uint8_t& frameTime);
 
     void drawImage(Display& display, bool& takeScreenshot);
 
     void drawHelp();
 
-    void draw(SDL_Renderer* renderer, Chip8& chip8, float& frameTime, bool& takeScreenshot);
+    void draw(SDL_Renderer* renderer, Chip8& chip8, uint8_t& frameTime, bool& takeScreenshot);
 };

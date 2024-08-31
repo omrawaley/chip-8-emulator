@@ -32,7 +32,7 @@ void Keypad::reset()
 
 bool& Keypad::operator[](uint8_t key)
 {
-    return this->keys[key];
+    return this->keys.at(key);
 }
 
 void Keypad::setKey(uint8_t key, bool activated)
@@ -40,22 +40,15 @@ void Keypad::setKey(uint8_t key, bool activated)
     if(key >= Keypad::keyCount)
         return;
 
-    this->oldKeys[key] = this->keys[key];
+    this->oldKeys.at(key) = this->keys.at(key);
 
-    this->keys[key] = activated;
+    this->keys.at(key) = activated;
 }
 
 void Keypad::update(const Uint8* keys)
 {
     for(uint8_t i = 0; i < this->keyCount; ++i)
     {
-        if(keys[Keypad::scancodes[i]])
-        {
-            this->setKey(i, true);
-        }
-        else
-        {
-            this->setKey(i, false);
-        }
+        this->setKey(i, keys[Keypad::scancodes.at(i)] != 0);
     }
 }

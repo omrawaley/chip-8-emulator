@@ -21,7 +21,7 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "../deps/stb_image_write.h"
 
-App::App() : quit(false), keys(nullptr), window(nullptr), renderer(nullptr), texture(nullptr), frameTime(16.6)
+App::App() : quit(false), keys(nullptr), window(nullptr), renderer(nullptr), texture(nullptr)
 {
     this->loadMedia();
 }
@@ -140,7 +140,7 @@ void App::draw()
 
     SDL_RenderCopy(this->renderer, this->texture, nullptr, nullptr);
 
-    GUI::draw(this->renderer, this->chip8, this->frameTime, this->takeScreenshot);
+    GUI::draw(this->renderer, this->chip8, this->chip8.instructionsPerSecond, this->takeScreenshot);
 
     SDL_RenderPresent(this->renderer);
 }

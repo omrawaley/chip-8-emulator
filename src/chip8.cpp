@@ -18,7 +18,7 @@
 #include "instructions.h"
 #include <cstdlib>
 
-Chip8::Chip8() : paused(false)
+Chip8::Chip8() : paused(false), instructionsPerSecond(11)
 {
     this->reset(true);
 }
@@ -46,7 +46,7 @@ void Chip8::emulateCycle(const Uint8* keys)
 
     this->keypad.update(keys);
 
-    for(uint8_t i = 0; i < Chip8::instructionsPerSecond; ++i)
+    for(uint8_t i = 0; i < this->instructionsPerSecond; ++i)
     {
         Instruction instruction(this->memory.fetchWord(this->cpu.pc));
 

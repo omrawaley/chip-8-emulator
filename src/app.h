@@ -44,8 +44,6 @@ class App
 
         bool takeScreenshot;
 
-        float frameTime;
-
     private:
         void screenshot();
 

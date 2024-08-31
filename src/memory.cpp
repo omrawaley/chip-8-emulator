@@ -36,13 +36,13 @@ uint8_t& Memory::operator[](uint16_t index)
 
 uint8_t* Memory::getData()
 {
-    return this->memory;
+    return this->memory.data();
 }
 
 uint16_t Memory::fetchWord(uint16_t pc)
 {
-    const uint8_t highByte = this->memory[pc + 0];
-    const uint8_t lowByte = this->memory[pc + 1];
+    const uint8_t highByte = this->memory.at(pc);
+    const uint8_t lowByte = this->memory.at(pc + 1);
 
     const uint16_t word = (highByte << 8 | lowByte);
 
@@ -51,11 +51,11 @@ uint16_t Memory::fetchWord(uint16_t pc)
 
 void Memory::loadFont()
 {
-    if(sizeof(Memory::fontset0) / sizeof(Memory::fontset0[0]) > Memory::fontsetSize)
+    if(Memory::fontset0.size() > Memory::fontsetSize)
         return;
 
     for(int i = 0; i < Memory::fontsetSize; ++i)
-        this->memory[i] = Memory::fontset0[i];
+        this->memory.at(i) = Memory::fontset0.at(i);
 }
 
 void Memory::loadROM(const char* romPath)
@@ -74,12 +74,12 @@ void Memory::loadROM(const char* romPath)
 
         for(long i = 0; i < size; ++i)
         {
-            this->memory[CPU::pcStart + i] = buffer[i];
+            this->memory.at(CPU::pcStart + i) = buffer[i];
         }
 
         delete[] buffer;
 
-        this->romSize = size;
+        this->romSize = std::filesystem::file_size(romPath);
 
         this->romLoaded = true;
     }

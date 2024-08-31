@@ -35,10 +35,10 @@ void Display::clear()
 
 uint32_t& Display::operator[](uint32_t index)
 {
-    return this->display[index];
+    return this->display.at(index);
 }
 
 uint32_t* Display::getData()
 {
-    return this->display;
+    return this->display.data();
 }

@@ -17,6 +17,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <array>
 
 #include <SDL2/SDL.h>
 
@@ -26,7 +27,7 @@ class Keypad
         static constexpr uint8_t keyCount = 16; 
 
     private:
-        static constexpr SDL_Scancode scancodes[Keypad::keyCount]
+        static constexpr std::array<SDL_Scancode, Keypad::keyCount> scancodes
         {
             SDL_SCANCODE_X,
             SDL_SCANCODE_1,
@@ -47,10 +48,10 @@ class Keypad
         };
 
     private:
-        bool keys[Keypad::keyCount];
+        std::array<bool, Keypad::keyCount> keys;
 
     public:
-        bool oldKeys[Keypad::keyCount];
+        std::array<bool, Keypad::keyCount> oldKeys;
 
     public:
         Keypad();

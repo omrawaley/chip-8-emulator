@@ -20,6 +20,8 @@
 
 #include "app.h"
 
+constexpr float frameTime = 16.6;
+
 int main(int argc, char* argv[])
 {
     App app;
@@ -34,7 +36,7 @@ int main(int argc, char* argv[])
 
         float deltaTime = std::chrono::duration<float, std::chrono::milliseconds::period>(currentTime - lastCycleTime).count();
 
-        if(deltaTime > app.frameTime)
+        if(deltaTime > frameTime)
         {
             lastCycleTime = currentTime;
 

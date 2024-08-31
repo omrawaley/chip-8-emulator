@@ -46,7 +46,7 @@ void GUI::processEvent(SDL_Event event)
     ImGui_ImplSDL2_ProcessEvent(&event);
 }
 
-void GUI::drawSettings(Chip8& chip8, float& frameTime, bool& takeScreenshot)
+void GUI::drawSettings(Chip8& chip8, uint8_t& frameTime, bool& takeScreenshot)
 {
     if(!GUI::showSettings)
         return;
@@ -270,26 +270,26 @@ void GUI::drawROMs(Chip8& chip8)
         chip8.reset(false);
 }
 
-void GUI::drawSpeed(float& frameTime)
+void GUI::drawSpeed(uint8_t& instructionsPerSecond)
 {
     static bool applyImmediately;
 
-    static float value = 16.6;
+    static int value = 11;
 
-    ImGui::DragFloat("Frame Time", &value, 0.05, 0, 60);
+    ImGui::DragInt("Instructions Per Second", &value, 0.1, 0, 64);
 
     ImGui::Checkbox("Apply Immediately", &applyImmediately);
 
     if(applyImmediately)
     {
-        frameTime = value;
+        instructionsPerSecond = value;
     }
 
     else
     {
         if(ImGui::Button("Apply"))
         {
-            frameTime = value;
+            instructionsPerSecond = value;
         }
     }
 }
@@ -360,21 +360,21 @@ void GUI::drawHelp()
 
     for(uint8_t i = 0; i < 8; i += 2)
     {
-        ImGui::Text("%s", GUI::controlsText[i].c_str());
+        ImGui::Text("%s", GUI::controlsText.at(i).c_str());
 
         ImGui::SameLine();
 
-        ImGui::Text("%s", GUI::controlsText[i + 1].c_str());
+        ImGui::Text("%s", GUI::controlsText.at(i + 1).c_str());
     }
 }
 
-void GUI::draw(SDL_Renderer* renderer, Chip8& chip8, float& frameTime, bool& takeScreenshot)
+void GUI::draw(SDL_Renderer* renderer, Chip8& chip8, uint8_t& instructionsPerSecond, bool& takeScreenshot)
 {
     ImGui_ImplSDLRenderer2_NewFrame();
     ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
 
-    GUI::drawSettings(chip8, frameTime, takeScreenshot);
+    GUI::drawSettings(chip8, instructionsPerSecond, takeScreenshot);
     
     GUI::drawMemoryEditor(chip8.memory);
 

@@ -17,6 +17,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <array>
 
 class CPU
 {
@@ -38,9 +39,9 @@ class CPU
 
         uint8_t soundTimer; // Used for generating sound
 
-        uint8_t v[CPU::registerCount]; // Registers 0 to F
+        std::array<uint8_t, CPU::registerCount> v; // Registers 0 to F
 
-        uint16_t stack[CPU::stackSize]; // Stores return addresses
+        std::array<uint16_t, CPU::stackSize> stack; // Stores return addresses
     
     public:
         CPU();

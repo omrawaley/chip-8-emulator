@@ -24,8 +24,8 @@
 
 class Chip8
 {
-    private:
-        static constexpr uint8_t instructionsPerSecond = 11;
+    public:
+        uint8_t instructionsPerSecond;
 
     public:
         CPU cpu;

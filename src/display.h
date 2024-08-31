@@ -17,6 +17,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <array>
 
 class Display
 {
@@ -30,7 +31,7 @@ class Display
         uint32_t offColor;
 
     private:
-        uint32_t display[Display::displayWidth * Display::displayHeight]; // Display with 2048 pixels 
+        std::array<uint32_t, Display::displayWidth * Display::displayHeight> display; // Display with 2048 pixels 
 
     public:
         Display();
