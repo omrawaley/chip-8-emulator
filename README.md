@@ -24,6 +24,8 @@ This project was my first foray into interpreters, emulators, and virtual machin
 - View registers, stack, and timers at runtime
 - Adjust program counter while paused
 
+A Chip-8 assembler that I've written can be found at https://github.com/omrawaley/chip-8-assembler.
+
 
 ## Installation
 
