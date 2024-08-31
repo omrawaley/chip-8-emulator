@@ -54,6 +54,7 @@ N - Open debug panes.
 - Allow the user to modify IPS rather than frame time
 - Add more CLI arguments
 - Allow the user to step through the program
+- Migrate away from using `tellg()` and instead use `file_size()`
 
 ## License
 
