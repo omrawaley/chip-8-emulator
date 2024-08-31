@@ -51,6 +51,7 @@ N - Open debug panes.
 - Migrate from C-style arrays to `std::array`
 - Allow the user to modify IPS rather than frame time
 - Add more CLI arguments
+- Allow the user to step through the program
 
 ## License
 
