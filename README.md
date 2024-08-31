@@ -50,11 +50,11 @@ M - Open settings menu.
 N - Open debug panes.
 
 ## Todo
-~~- Migrate from C-style arrays to `std::array`~~
-~~- Allow the user to modify IPS rather than frame time~~
+- ~~Migrate from C-style arrays to `std::array`~~
+- ~~Allow the user to modify IPS rather than frame time~~
 - Add more CLI arguments
 - Allow the user to step through the program
-~~- Migrate away from using `tellg()` and instead use `file_size()`~~
+- ~~Migrate away from using `tellg()` and instead use `file_size()`~~
 
 ## License
 
