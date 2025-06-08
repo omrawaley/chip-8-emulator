@@ -2,6 +2,9 @@
 # Chip-8 Emulator
 
 This project was my first foray into interpreters, emulators, and virtual machines. It's a fairly basic Chip-8 emulator with debugging tools that focuses on customizability. 
+
+Check out my newer [Chip-8 emulator](https://github.com/omrawaley/chip8-emulator-rust) written in Rust.
+
 ## Authors
 
 - [@omrawaley](https://www.github.com/omrawaley)
